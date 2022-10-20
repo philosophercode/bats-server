@@ -29,14 +29,12 @@ function RingdownCard({ children, className, ringdown, dismissable, onStatusChan
     onStatusChange(ringdown, AcknowledgedStatus[currentDeliveryStatus]);
   }
 
-  const canBeDismissed =
-    dismissable &&
-    (currentDeliveryStatus === Status.OFFLOADED ||
-      currentDeliveryStatus === Status.CANCELLED ||
-      currentDeliveryStatus === Status.REDIRECTED);
+  const canBeDismissed = dismissable && [Status.OFFLOADED, Status.CANCELLED, Status.REDIRECTED].includes(currentDeliveryStatus);
   const drawerTitle =
     currentDeliveryStatus === Status.OFFLOADED ? (
       <RingdownBadge status={currentDeliveryStatus} />
+    ) : currentDeliveryStatus === Status.ARRIVED ? (
+      <Timestamp className="ringdown-card__status" label="Arrived:" time={etaDateTimeLocalObj} />
     ) : (
       <Timestamp className="ringdown-card__status" label="ETA:" time={etaDateTimeLocalObj} />
     );
